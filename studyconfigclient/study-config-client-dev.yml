@@ -1,0 +1,25 @@
+## eureka
+eureka:
+  instance:
+    ## eureka主机名，会在控制页面中显示
+    hostname: localhost
+    prefer-ip-address: true
+    ## 心跳检测，检测与持续时间
+    ## 发送心跳间隔时间 单位秒 (测试的时候设置小一点，让eureka服务端及时踢出该服务)
+    lease-renewal-interval-in-seconds: 10
+    ## eureka服务端收到最后一次心跳后等待时间上限 单位秒 (告诉eureka服务端按照规则执行)
+    lease-expiration-duration-in-seconds: 20
+    ## eureka服务器页面中status的请求路径(查看swagger页面的信息)
+    status-page-url: http://${eureka.instance.hostname}:${server.port}/swagger-ui.html
+  client:
+    serviceUrl:
+      defaultZone: http://lzr:123456@localhost:1111/eureka/
+## actuator下默认端点时health和info，没有refresh端点，以此需要添加该端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
+## 日志配置文件
+logging:
+  config: classpath:logback.xml
